@@ -3,10 +3,11 @@ ARG PYTHON_VERSION=3.10-slim
 
 # Start Python image
 FROM python:${PYTHON_VERSION}
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install git
 RUN apt-get update && \
-    apt-get install -y git && \
+    apt-get install -y --no-install-recommends git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
