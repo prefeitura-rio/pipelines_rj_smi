@@ -163,7 +163,7 @@ siscob_clocks = generate_dump_db_schedules(
     db_port="1433",
     db_type="sql_server",
     dataset_id="infraestrutura_siscob_obras",
-    vault_secret_path="siscob",
+    infisical_secret_path="/db_siscob",
     table_parameters=siscob_queries,
 )
 
