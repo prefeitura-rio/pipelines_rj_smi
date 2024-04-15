@@ -24,7 +24,7 @@ RUN apt-get update && \
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update && \
-    ACCEPT_EULA=Y apt-get install -y git msodbcsql17 openssl unixodbc-dev && \
+    ACCEPT_EULA=Y apt-get install --no-install-recommends -y git msodbcsql17 openssl unixodbc-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY ./openssl.cnf /etc/ssl/openssl.cnf
