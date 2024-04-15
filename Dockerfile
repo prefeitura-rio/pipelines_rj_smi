@@ -1,5 +1,5 @@
 # Build arguments
-ARG PYTHON_VERSION=3.10-slim
+ARG PYTHON_VERSION=3.10-slim-buster
 
 # Get Oracle Instant Client
 FROM curlimages/curl:7.81.0 as curl-step
@@ -18,11 +18,16 @@ RUN apt-get update && \
 FROM python:${PYTHON_VERSION}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install git
+# Install a few dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git && \
+    apt-get install --no-install-recommends -y git curl gnupg2 libaio1 && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y git msodbcsql17 openssl unixodbc-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+COPY ./openssl.cnf /etc/ssl/openssl.cnf
 
 # Setting environment with prefect version
 ARG PREFECT_VERSION=1.4.1
