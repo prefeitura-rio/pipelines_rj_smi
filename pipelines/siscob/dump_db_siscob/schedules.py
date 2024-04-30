@@ -106,11 +106,12 @@ siscob_queries = {
         "dump_mode": "overwrite",
         "execute_query": """
             SELECT
-                CD_OBRA,
-                ENDERECO,
-                NM_BAIRRO,
-                NM_RA,
-                NM_AP
+                DISTINCT
+                    CD_OBRA,
+                    ENDERECO,
+                    NM_BAIRRO,
+                    NM_RA,
+                    NM_AP
             FROM dbo.fuSEGOVI_Localizacoes_obra()
             """,
     },
@@ -155,14 +156,15 @@ siscob_queries = {
         "dump_mode": "overwrite",
         "execute_query": """
             SELECT
-                CD_OBRA,
-                REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
-                DT_SUSPENSAO,
-                DS_MOTIVO,
-                REPLACE(DS_MOTIVO, CHAR(13), '') AS DS_MOTIVO,
-                REPLACE(DS_PREVISAO, CHAR(13), '') AS DS_PREVISAO,
-                REPLACE(DS_JUSTIFICATIVA, CHAR(13), '') AS DS_JUSTIFICATIVA,
-                NM_RESPONSAVEL
+                DISTINCT
+                    CD_OBRA,
+                    REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                    DT_SUSPENSAO,
+                    DS_MOTIVO,
+                    REPLACE(DS_MOTIVO, CHAR(13), '') AS DS_MOTIVO,
+                    REPLACE(DS_PREVISAO, CHAR(13), '') AS DS_PREVISAO,
+                    REPLACE(DS_JUSTIFICATIVA, CHAR(13), '') AS DS_JUSTIFICATIVA,
+                    NM_RESPONSAVEL
             FROM dbo.fuSEGOVI_Obras_Suspensas()
             """,
     },
@@ -172,45 +174,47 @@ siscob_queries = {
         "dump_mode": "overwrite",
         "execute_query": """
             SELECT
-                CD_OBRA,
-                REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
-                DS_ESTADO,
-                NR_MEDICAO,
-                DT_INI_MEDICAO,
-                DT_FIM_MEDICAO,
-                CD_ETAPA,
-                NM_SISTEMA,
-                NM_SUB_SISTEMA,
-                NM_PLANILHA,
-                NR_ITEM,
-                CD_CHAVE_EXTERNA,
-                REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
-                TX_UNIDADE_MEDIDA,
-                VL_ITEM_SERVICO,
-                QT_MEDIDA,
-                QT_ACUMULADA,
-                VL_MEDIDO
+                DISTINCT
+                    CD_OBRA,
+                    REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                    DS_ESTADO,
+                    NR_MEDICAO,
+                    DT_INI_MEDICAO,
+                    DT_FIM_MEDICAO,
+                    CD_ETAPA,
+                    NM_SISTEMA,
+                    NM_SUB_SISTEMA,
+                    NM_PLANILHA,
+                    NR_ITEM,
+                    CD_CHAVE_EXTERNA,
+                    REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
+                    TX_UNIDADE_MEDIDA,
+                    VL_ITEM_SERVICO,
+                    QT_MEDIDA,
+                    QT_ACUMULADA,
+                    VL_MEDIDO
             FROM dbo.fuSEGOVI_Itens_Medicao()
             """,
     },
-    "orcamento_medicao": {
+    "orcamento_licitado": {
         "materialize_after_dump": False,
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
             SELECT
-                CD_OBRA,
-                REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
-                NM_SISTEMA,
-                NM_SUB_SISTEMA,
-                NM_PLANILHA,
-                NR_ITEM,
-                CD_CHAVE_EXTERNA,
-                REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
-                TX_UNIDADE_MEDIDA,
-                QT_CONTRATADO,
-                VL_UNITARIO,
-                VL_TOTAL
+                DISTINCT
+                    CD_OBRA,
+                    REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                    NM_SISTEMA,
+                    NM_SUB_SISTEMA,
+                    NM_PLANILHA,
+                    NR_ITEM,
+                    CD_CHAVE_EXTERNA,
+                    REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
+                    TX_UNIDADE_MEDIDA,
+                    QT_CONTRATADO,
+                    VL_UNITARIO,
+                    VL_TOTAL
             FROM dbo.fuSEGOVI_Orcamento_Licitado()
             """,
     },
