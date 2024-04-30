@@ -2,7 +2,7 @@
 # flake8: noqa
 
 """
-Schedules for the database dump pipeline
+Schedules for the database dump pipeline.
 """
 
 from datetime import datetime, timedelta
