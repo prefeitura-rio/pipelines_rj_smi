@@ -3,11 +3,10 @@
 Schedules for the database dump pipeline
 """
 
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
-from prefect.schedules import Schedule
 import pytz
-
+from prefect.schedules import Schedule
 from prefeitura_rio.pipelines_utils.io import untuple_clocks as untuple
 from prefeitura_rio.pipelines_utils.prefect import generate_dump_db_schedules
 
@@ -25,7 +24,7 @@ siscob_queries = {
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
-            Select
+            SELECT
                 DISTINCT
                     CD_OBRA,
                     DS_TITULO,
@@ -49,7 +48,7 @@ siscob_queries = {
                     VL_VIGENTE,
                     PC_MEDIDO,
                     PRAZO_INICIAL
-            from dbo.fuSEGOVI_Dados_da_Obra()
+            FROM dbo.fuSEGOVI_Dados_da_Obra()
             """,
     },
     "medicao": {
@@ -57,7 +56,7 @@ siscob_queries = {
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
-            Select
+            SELECT
                 DISTINCT
                     CD_OBRA,
                     NR_MEDICAO,
@@ -66,7 +65,7 @@ siscob_queries = {
                     DT_INI_MEDICAO,
                     DT_FIM_MEDICAO,
                     VL_FINAL
-            from dbo.fuSEGOVI_Medicoes()
+            FROM dbo.fuSEGOVI_Medicoes()
             """,
     },
     "termo_aditivo": {
@@ -74,7 +73,7 @@ siscob_queries = {
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
-            Select
+            SELECT
                 DISTINCT
                     CD_OBRA,
                     NR_DO_TERMO,
@@ -82,7 +81,7 @@ siscob_queries = {
                     DT_DO,
                     DT_AUTORIZACAO,
                     VL_ACERTO
-            from dbo.fuSEGOVI_Termos_Aditivos()
+            FROM dbo.fuSEGOVI_Termos_Aditivos()
             """,
     },
     "cronograma_financeiro": {
@@ -90,7 +89,7 @@ siscob_queries = {
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
-            Select
+            SELECT
                 DISTINCT
                     CD_OBRA,
                     ETAPA,
@@ -98,7 +97,7 @@ siscob_queries = {
                     DT_FIM_ETAPA,
                     PC_PERCENTUAL,
                     VL_ESTIMADO
-            from dbo.fuSEGOVI_Cronograma_Financeiro()
+            FROM dbo.fuSEGOVI_Cronograma_Financeiro()
             """,
     },
     "localizacao": {
@@ -106,13 +105,13 @@ siscob_queries = {
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
-            Select
+            SELECT
                 CD_OBRA,
                 ENDERECO,
                 NM_BAIRRO,
                 NM_RA,
                 NM_AP
-            from dbo.fuSEGOVI_Localizacoes_obra()
+            FROM dbo.fuSEGOVI_Localizacoes_obra()
             """,
     },
     "cronograma_alteracao": {
@@ -120,7 +119,7 @@ siscob_queries = {
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
-            Select
+            SELECT
                 DISTINCT
                     CD_OBRA,
                     NR_PROCESSO,
@@ -130,7 +129,7 @@ siscob_queries = {
                     NR_PRAZO,
                     DT_VALIDADE,
                     DS_OBSERVACAO
-            from dbo.fuSEGOVI_Alteração_de_Cronograma()
+            FROM dbo.fuSEGOVI_Alteração_de_Cronograma()
             """,
     },
     "programa_fonte": {
@@ -138,7 +137,7 @@ siscob_queries = {
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
-            Select
+            SELECT
                 DISTINCT
                     CD_OBRA,
                     CD_PRG_TRAB,
@@ -147,7 +146,72 @@ siscob_queries = {
                     FONTE_RECURSO,
                     CD_NATUREZA_DSP,
                     NATUREZA_DESPESA
-            from dbo.fuSEGOVI_Programa_Fonte()
+            FROM dbo.fuSEGOVI_Programa_Fonte()
+            """,
+    },
+    "obras_suspensas": {
+        "materialize_after_dump": False,
+        "materialization_mode": "prod",
+        "dump_mode": "overwrite",
+        "execute_query": """
+            SELECT
+                CD_OBRA,
+                REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                DT_SUSPENSAO,
+                DS_MOTIVO,
+                REPLACE(DS_MOTIVO, CHAR(13), '') AS DS_MOTIVO,
+                REPLACE(DS_PREVISAO, CHAR(13), '') AS DS_PREVISAO,
+                REPLACE(DS_JUSTIFICATIVA, CHAR(13), '') AS DS_JUSTIFICATIVA,
+                NM_RESPONSAVEL
+            FROM dbo.fuSEGOVI_Obras_Suspensas()
+            """,
+    },
+    "itens_medicao": {
+        "materialize_after_dump": False,
+        "materialization_mode": "prod",
+        "dump_mode": "overwrite",
+        "execute_query": """
+            SELECT
+                CD_OBRA,
+                REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                DS_ESTADO,
+                NR_MEDICAO,
+                DT_INI_MEDICAO,
+                DT_FIM_MEDICAO,
+                CD_ETAPA,
+                NM_SISTEMA,
+                NM_SUB_SISTEMA,
+                NM_PLANILHA,
+                NR_ITEM,
+                CD_CHAVE_EXTERNA,
+                REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
+                TX_UNIDADE_MEDIDA,
+                VL_ITEM_SERVICO,
+                QT_MEDIDA,
+                QT_ACUMULADA,
+                VL_MEDIDO
+            FROM dbo.fuSEGOVI_Itens_Medicao()
+            """,
+    },
+    "orcamento_medicao": {
+        "materialize_after_dump": False,
+        "materialization_mode": "prod",
+        "dump_mode": "overwrite",
+        "execute_query": """
+            SELECT
+                CD_OBRA,
+                REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                NM_SISTEMA,
+                NM_SUB_SISTEMA,
+                NM_PLANILHA,
+                NR_ITEM,
+                CD_CHAVE_EXTERNA,
+                REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
+                TX_UNIDADE_MEDIDA,
+                QT_CONTRATADO,
+                VL_UNITARIO,
+                VL_TOTAL
+            FROM dbo.fuSEGOVI_Orcamento_Licitado()
             """,
     },
 }
