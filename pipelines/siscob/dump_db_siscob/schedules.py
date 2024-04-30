@@ -153,7 +153,7 @@ siscob_queries = {
             """,
     },
     "obras_suspensas": {
-        "materialize_after_dump": False,
+        "materialize_after_dump": True,
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
@@ -170,7 +170,7 @@ siscob_queries = {
             """,
     },
     "itens_medicao": {
-        "materialize_after_dump": False,
+        "materialize_after_dump": True,
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
@@ -198,7 +198,7 @@ siscob_queries = {
             """,
     },
     "orcamento_licitado": {
-        "materialize_after_dump": False,
+        "materialize_after_dump": True,
         "materialization_mode": "prod",
         "dump_mode": "overwrite",
         "execute_query": """
@@ -223,7 +223,7 @@ siscob_queries = {
 
 siscob_clocks = generate_dump_db_schedules(
     interval=timedelta(minutes=15),
-    start_date=datetime(2022, 12, 19, 1, 0, tzinfo=pytz.timezone("America/Sao_Paulo")),
+    start_date=datetime(2024, 1, 1, 2, 0, tzinfo=pytz.timezone("America/Sao_Paulo")),
     labels=[
         constants.RJ_SMI_AGENT_LABEL.value,
     ],
