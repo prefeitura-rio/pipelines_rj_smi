@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Database dumping flows for segovi project (SISCOB)
+Database dumping flows for segovi project (SISCOB).
 """
 
 from copy import deepcopy
 
 from prefect.run_configs import KubernetesRun
 from prefect.storage import GCS
-
 from prefeitura_rio.pipelines_templates.dump_db.flows import flow as dump_sql_flow
 from prefeitura_rio.pipelines_utils.prefect import set_default_parameters
 from prefeitura_rio.pipelines_utils.state_handlers import (
@@ -16,9 +15,7 @@ from prefeitura_rio.pipelines_utils.state_handlers import (
 )
 
 from pipelines.constants import constants
-from pipelines.siscob.dump_db_siscob.schedules import (
-    siscob_update_schedule,
-)
+from pipelines.siscob.dump_db_siscob.schedules import siscob_update_schedule
 
 dump_siscob_flow = deepcopy(dump_sql_flow)
 dump_siscob_flow.name = "SMI: SISCOB - Ingerir tabelas de banco SQL"
