@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-DBT-related flows.
+DBT-related flows
 """
 
 from copy import deepcopy
 
 from prefect.run_configs import KubernetesRun
 from prefect.storage import GCS
-
 from prefeitura_rio.pipelines_templates.run_dbt_model.flows import (
     templates__run_dbt_model__flow,
 )
