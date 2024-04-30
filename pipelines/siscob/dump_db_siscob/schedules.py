@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
+
 """
 Schedules for the database dump pipeline
 """
@@ -158,12 +160,11 @@ siscob_queries = {
             SELECT
                 DISTINCT
                     CD_OBRA,
-                    REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                    REPLACE(REPLACE(DS_TITULO_OBJETO, CHAR(13), ''), CHAR(10), '') AS DS_TITULO_OBJETO,
                     DT_SUSPENSAO,
-                    DS_MOTIVO,
-                    REPLACE(DS_MOTIVO, CHAR(13), '') AS DS_MOTIVO,
-                    REPLACE(DS_PREVISAO, CHAR(13), '') AS DS_PREVISAO,
-                    REPLACE(DS_JUSTIFICATIVA, CHAR(13), '') AS DS_JUSTIFICATIVA,
+                    REPLACE(REPLACE(DS_MOTIVO, CHAR(13), ''), CHAR(10), '') AS DS_MOTIVO,
+                    REPLACE(REPLACE(DS_PREVISAO, CHAR(13), ''), CHAR(10), '') AS DS_PREVISAO,
+                    REPLACE(REPLACE(DS_JUSTIFICATIVA, CHAR(13), ''), CHAR(10), '') AS DS_JUSTIFICATIVA,
                     NM_RESPONSAVEL
             FROM dbo.fuSEGOVI_Obras_Suspensas()
             """,
@@ -176,7 +177,7 @@ siscob_queries = {
             SELECT
                 DISTINCT
                     CD_OBRA,
-                    REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                    REPLACE(REPLACE(DS_TITULO_OBJETO, CHAR(13), ''), CHAR(10), '') AS DS_TITULO_OBJETO,
                     DS_ESTADO,
                     NR_MEDICAO,
                     DT_INI_MEDICAO,
@@ -187,7 +188,7 @@ siscob_queries = {
                     NM_PLANILHA,
                     NR_ITEM,
                     CD_CHAVE_EXTERNA,
-                    REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
+                    REPLACE(REPLACE(DS_ITEM_SERVICO, CHAR(13), ''), CHAR(10), '') AS DS_ITEM_SERVICO,
                     TX_UNIDADE_MEDIDA,
                     VL_ITEM_SERVICO,
                     QT_MEDIDA,
@@ -204,13 +205,13 @@ siscob_queries = {
             SELECT
                 DISTINCT
                     CD_OBRA,
-                    REPLACE(DS_TITULO_OBJETO, CHAR(13), '') AS DS_TITULO_OBJETO,
+                    REPLACE(REPLACE(DS_TITULO_OBJETO, CHAR(13), ''), CHAR(10), '') AS DS_TITULO_OBJETO,
                     NM_SISTEMA,
                     NM_SUB_SISTEMA,
                     NM_PLANILHA,
                     NR_ITEM,
                     CD_CHAVE_EXTERNA,
-                    REPLACE(DS_ITEM_SERVICO, CHAR(13), '') AS DS_ITEM_SERVICO,
+                    REPLACE(REPLACE(DS_ITEM_SERVICO, CHAR(13), ''), CHAR(10), '') AS DS_ITEM_SERVICO,
                     TX_UNIDADE_MEDIDA,
                     QT_CONTRATADO,
                     VL_UNITARIO,
