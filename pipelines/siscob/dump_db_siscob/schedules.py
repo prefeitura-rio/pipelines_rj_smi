@@ -29,7 +29,7 @@ siscob_queries = {
             SELECT
                 DISTINCT
                     CD_OBRA,
-                    DS_TITULO,
+                    REPLACE(REPLACE(DS_TITULO, CHAR(13), ''), CHAR(10), '') AS DS_TITULO,
                     ORGAO_CONTRATANTE,
                     ORGAO_EXECUTOR,
                     NR_PROCESSO,
@@ -131,7 +131,7 @@ siscob_queries = {
                     CD_ETAPA,
                     NR_PRAZO,
                     DT_VALIDADE,
-                    DS_OBSERVACAO
+                    REPLACE(REPLACE(DS_OBSERVACAO, CHAR(13), ''), CHAR(10), '') AS DS_OBSERVACAO,
             FROM dbo.fuSEGOVI_Alteração_de_Cronograma()
             """,
     },
@@ -218,6 +218,28 @@ siscob_queries = {
                     VL_TOTAL
             FROM dbo.fuSEGOVI_Orcamento_Licitado()
             """,
+    },
+    "itens_medidos_finalizados": {
+        "materialize_after_dump": True,
+        "materialization_mode": "prod",
+        "dump_mode": "overwrite",
+        "execute_query": """
+            SELECT
+                CD_OBRA,
+                NM_SISTEMA,
+                NM_SUB_SISTEMA,
+                NM_PLANILHA,
+                NR_ITEM,
+                CD_CHAVE_EXTERNA,
+                REPLACE(REPLACE(DS_ITEM_SERVICO, CHAR(13), ''), CHAR(10), '') AS DS_ITEM_SERVICO,
+                TX_UNIDADE_MEDIDA,
+                QT_CONTRATADA,
+                VL_UNITARIO_LICITACAO,
+                QT_ACUMULADA,
+                VL_ACUMULADO_MEDIDO,
+                DT_FIM_OBRA
+            FROM dbo.fuSEGOVI_Itens_Medidos_Finalizados()
+        """,
     },
 }
 
