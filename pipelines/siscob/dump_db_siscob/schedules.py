@@ -225,19 +225,20 @@ siscob_queries = {
         "dump_mode": "overwrite",
         "execute_query": """
             SELECT
-                CD_OBRA,
-                NM_SISTEMA,
-                NM_SUB_SISTEMA,
-                NM_PLANILHA,
-                NR_ITEM,
-                CD_CHAVE_EXTERNA,
-                REPLACE(REPLACE(DS_ITEM_SERVICO, CHAR(13), ''), CHAR(10), '') AS DS_ITEM_SERVICO,
-                TX_UNIDADE_MEDIDA,
-                QT_CONTRATADA,
-                VL_UNITARIO_LICITACAO,
-                QT_ACUMULADA,
-                VL_ACUMULADO_MEDIDO,
-                DT_FIM_OBRA
+                DISTINCT
+                    CD_OBRA,
+                    NM_SISTEMA,
+                    NM_SUB_SISTEMA,
+                    NM_PLANILHA,
+                    NR_ITEM,
+                    CD_CHAVE_EXTERNA,
+                    REPLACE(REPLACE(DS_ITEM_SERVICO, CHAR(13), ''), CHAR(10), '') AS DS_ITEM_SERVICO,
+                    TX_UNIDADE_MEDIDA,
+                    QT_CONTRATADA,
+                    VL_UNITARIO_LICITACAO,
+                    QT_ACUMULADA,
+                    VL_ACUMULADO_MEDIDO,
+                    DT_FIM_OBRA
             FROM dbo.fuSEGOVI_Itens_Medidos_Finalizados()
         """,
     },
