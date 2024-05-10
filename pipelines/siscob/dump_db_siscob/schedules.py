@@ -245,7 +245,7 @@ siscob_queries = {
 }
 
 siscob_clocks = generate_dump_db_schedules(
-    interval=timedelta(minutes=15),
+    interval=timedelta(days=1),
     start_date=datetime(2024, 1, 1, 2, 0, tzinfo=pytz.timezone("America/Sao_Paulo")),
     labels=[
         constants.RJ_SMI_AGENT_LABEL.value,
