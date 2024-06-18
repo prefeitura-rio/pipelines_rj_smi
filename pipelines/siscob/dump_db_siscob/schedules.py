@@ -102,21 +102,6 @@ siscob_queries = {
             FROM dbo.fuSEGOVI_Cronograma_Financeiro()
             """,
     },
-    "localizacao": {
-        "materialize_after_dump": True,
-        "materialization_mode": "prod",
-        "dump_mode": "overwrite",
-        "execute_query": """
-            SELECT
-                DISTINCT
-                    CD_OBRA,
-                    ENDERECO,
-                    NM_BAIRRO,
-                    NM_RA,
-                    NM_AP
-            FROM dbo.fuSEGOVI_Localizacoes_obra()
-            """,
-    },
     "cronograma_alteracao": {
         "materialize_after_dump": True,
         "materialization_mode": "prod",
@@ -133,23 +118,6 @@ siscob_queries = {
                     DT_VALIDADE,
                     REPLACE(REPLACE(DS_OBSERVACAO, CHAR(13), ''), CHAR(10), '') AS DS_OBSERVACAO,
             FROM dbo.fuSEGOVI_Alteração_de_Cronograma()
-            """,
-    },
-    "programa_fonte": {
-        "materialize_after_dump": True,
-        "materialization_mode": "prod",
-        "dump_mode": "overwrite",
-        "execute_query": """
-            SELECT
-                DISTINCT
-                    CD_OBRA,
-                    CD_PRG_TRAB,
-                    PROGRAMA_TRABALHO,
-                    CD_FONTE_RECURSO,
-                    FONTE_RECURSO,
-                    CD_NATUREZA_DSP,
-                    NATUREZA_DESPESA
-            FROM dbo.fuSEGOVI_Programa_Fonte()
             """,
     },
     "obras_suspensas": {
@@ -242,6 +210,62 @@ siscob_queries = {
             FROM dbo.fuSEGOVI_Itens_Medidos_Finalizados()
         """,
     },
+    "localizacao_obra": {
+        "materialize_after_dump": True,
+        "materialization_mode": "prod",
+        "dump_mode": "overwrite",
+        "execute_query": """
+            SELECT
+                DISTINCT
+                    CD_OBRA,
+                    ENDERECO,
+                    NM_BAIRRO,
+                    NM_RA,
+                    NM_AP
+            FROM dbo.fuSEGOVI_Localizacoes_obra()
+        """,
+    },
+    "programa_fonte": {
+        "materialize_after_dump": True,
+        "materialization_mode": "prod",
+        "dump_mode": "overwrite",
+        "execute_query": """
+            SELECT
+                DISTINCT
+                    CD_OBRA,
+                    CD_PRG_TRAB,
+                    PROGRAMA_TRABALHO,
+                    CD_FONTE_RECURSO,
+                    FONTE_RECURSO,
+                    CD_NATUREZA_DSP,
+                    NATUREZA_DESPESA
+            FROM dbo.fuSEGOVI_Programa_Fonte()
+            """,
+    },
+    # "localizacao": {
+    #     "materialize_after_dump": True,
+    #     "materialization_mode": "prod",
+    #     "dump_mode": "overwrite",
+    #     "execute_query": """
+    #         SELECT
+    #             DISTINCT
+    #                 CD_OBRA,
+    #                 ENDERECO,
+    #                 NM_BAIRRO,
+    #                 NM_RA,
+    #                 NM_AP
+    #         FROM dbo.()
+    #         """,
+    # },
+    # "orcamento_medicao ": {
+    #     "materialize_after_dump": True,
+    #     "materialization_mode": "prod",
+    #     "dump_mode": "overwrite",
+    #     "execute_query": """
+    #         SELECT
+    #         FROM dbo.()
+    #     """,
+    # },
 }
 
 siscob_clocks = generate_dump_db_schedules(

@@ -1,5 +1,5 @@
 WITH loc AS (
-  SELECT 
+  SELECT
       SAFE_CAST(
           REGEXP_REPLACE(cd_obra, r'\.0$', '') AS STRING
       ) id_obra,
@@ -10,7 +10,7 @@ WITH loc AS (
                     REPLACE(
                         REPLACE(
                             TRIM(INITCAP(nm_bairro)),
-                            'Braz De Pina', 
+                            'Braz De Pina',
                             'Bras de Pina'
                         ),
                         'Oswaldo Cruz',
@@ -30,18 +30,18 @@ WITH loc AS (
       SAFE_CAST(
         REPLACE(
           TRIM(nm_ap),
-          'AP ', 
+          'AP ',
           ''
         ) AS STRING
       ) id_regiao_planejamento,
       SAFE_CAST(
           INITCAP(endereco) AS STRING
       ) endereco,
-  FROM `rj-smi.infraestrutura_siscob_obras_staging.localizacao`
-), 
+  FROM `rj-smi.infraestrutura_siscob_obras_staging.localizacao_obra`
+),
 
 loc_geo AS (
-  SELECT 
+  SELECT
     loc.id_obra,
     bairros.id_bairro,
     bairros.nome AS bairro,
@@ -56,7 +56,7 @@ loc_geo AS (
     ON UPPER(loc.endereco) = UPPER(end_geo.address)
 )
 
-SELECT 
+SELECT
   l.id_obra,
   l.id_bairro,
   l.bairro,
