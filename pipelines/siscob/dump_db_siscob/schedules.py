@@ -116,7 +116,7 @@ siscob_queries = {
                     CD_ETAPA,
                     NR_PRAZO,
                     DT_VALIDADE,
-                    REPLACE(REPLACE(DS_OBSERVACAO, CHAR(13), ''), CHAR(10), '') AS DS_OBSERVACAO,
+                    REPLACE(REPLACE(DS_OBSERVACAO, CHAR(13), ''), CHAR(10), '') AS DS_OBSERVACAO
             FROM dbo.fuSEGOVI_Alteração_de_Cronograma()
             """,
     },
