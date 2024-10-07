@@ -1,5 +1,5 @@
 {{ config(alias='obra', schema='infraestrutura_siscob_obras_dashboard') }}
-WITH 
+WITH
   obra AS (
     SELECT
       id_obra,
@@ -62,13 +62,13 @@ WITH
       SPLIT(orgao_executor, " - ")[OFFSET(0)] AS orgao_executor_sigla_completa,
     FROM `rj-smi.infraestrutura_siscob_obras.obra`
     WHERE (
-  situacao IN("EXECUTANDO","SUSPENSA") AND 
+  situacao IN("EXECUTANDO","SUSPENSA") AND
   EXTRACT(YEAR FROM(data_termino_atual)) >= 2021
   ) OR
   EXTRACT(YEAR FROM(data_inicio)) >= 2021),
 
   obras_completa AS (
-    SELECT 
+    SELECT
       t.*,
       SPLIT(orgao_contratante_sigla_completa, "/")[OFFSET(0)] AS nome_orgao_contratante,
       SPLIT(orgao_executor_sigla_completa, "/")[OFFSET(0)] AS nome_orgao_executor
@@ -83,7 +83,7 @@ WITH
         ),
       -- #####################################################################
       -- extrair texto antes de / na coluna orgao_contratante_sigla_completa #
-      -- #####################################################################  
+      -- #####################################################################
       CASE
         WHEN nome_orgao_contratante = "AC" THEN "Secretaria Especial de Ação Comunitária - SEAC-RIO"
         WHEN nome_orgao_contratante = "CVL" THEN "Secretaria Municipal da Casa Civil - CASA CIVIL"
@@ -170,7 +170,7 @@ WITH
         WHEN nome_orgao_executor = "SMUIH" THEN "Secretaria Municipal de Urbanismo, Infraestrutura e Habitação - SMUIH"
         WHEN nome_orgao_executor = "UIH" THEN "Secretaria Municipal de Urbanismo, Infraestrutura e Habitação - SMUIH"
       ELSE orgao_executor
-      END AS nome_orgao_executor 
+      END AS nome_orgao_executor
     FROM obras_completa t
   ),
 
@@ -183,14 +183,14 @@ WITH
   ),
 
   obra_fonte AS (
-    SELECT 
+    SELECT
       o.id_obra,
       COUNT(f.fonte_recurso) AS qtd_fonte_recurso,
       ARRAY_TO_STRING(ARRAY_AGG (f.fonte_recurso),', ') fontes_recurso
     FROM `rj-smi.infraestrutura_siscob_obras.obra` o
     LEFT JOIN fonte f
       ON f.id_obra = o.id_obra
-    GROUP BY o.id_obra 
+    GROUP BY o.id_obra
     ORDER BY 2 DESC
   )
 
@@ -200,5 +200,5 @@ SELECT
   f.fontes_recurso
 FROM obras_final o
 LEFT JOIN obra_fonte f
-  ON f.id_obra = o.id_obra  
+  ON f.id_obra = o.id_obra
 ORDER BY f.qtd_fonte_recurso DESC
