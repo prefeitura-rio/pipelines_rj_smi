@@ -11,7 +11,7 @@ FROM
   `rj-smi.infraestrutura_siscob_obras.medicao` AS m
   INNER JOIN `rj-smi.infraestrutura_siscob_obras.obra` AS o ON m.id_obra = o.id_obra
 WHERE (
-  situacao IN("EXECUTANDO","SUSPENSA") AND 
+  situacao IN("EXECUTANDO","SUSPENSA") AND
   EXTRACT(YEAR FROM(o.data_termino_atual)) >= 2021
   ) OR
   EXTRACT(YEAR FROM(o.data_inicio)) >= 2021
