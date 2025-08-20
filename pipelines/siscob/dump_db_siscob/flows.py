@@ -40,4 +40,4 @@ dump_siscob_flow = set_default_parameters(
     dump_siscob_flow, default_parameters=siscob_default_parameters
 )
 
-dump_siscob_flow.schedule = siscob_update_schedule
+# dump_siscob_flow.schedule = siscob_update_schedule

@@ -40,4 +40,4 @@ run_dbt_smi_dashboard_obras_flow = set_default_parameters(
     default_parameters=smi_dashboard_obras_default_parameters,
 )
 
-run_dbt_smi_dashboard_obras_flow.schedule = smi_dashboard_obras_monthly_update_schedule
+# run_dbt_smi_dashboard_obras_flow.schedule = smi_dashboard_obras_monthly_update_schedule
