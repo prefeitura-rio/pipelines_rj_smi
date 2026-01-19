@@ -1,4 +1,4 @@
-SELECT 
+SELECT
     DISTINCT
         SAFE_CAST(REGEXP_REPLACE(cd_obra, r'\.0$', '') AS STRING) id_obra,
         SAFE_CAST(tp_acerto AS STRING) tipo_acerto,
