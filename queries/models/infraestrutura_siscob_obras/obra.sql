@@ -1,4 +1,4 @@
-SELECT 
+SELECT
     DISTINCT
         SAFE_CAST(REGEXP_REPLACE(cd_obra, r'\.0$', '') AS STRING) id_obra,
         SAFE_CAST(
@@ -23,7 +23,7 @@ SELECT
             SAFE.PARSE_TIMESTAMP ('%Y-%m-%d %H:%M:%S', dt_ass_contrato) AS DATETIME
         ) AS data_assinatura_contrato,
         SAFE_CAST(dt_inicio_obra AS DATE) AS data_inicio,
-        SAFE_CAST(dt_termino_previsto AS DATE) AS data_termino_previsto, 
+        SAFE_CAST(dt_termino_previsto AS DATE) AS data_termino_previsto,
         SAFE_CAST(dt_termino_atual AS DATE) AS data_termino_atual,
         SAFE_CAST(vl_orcado_c_bdi AS FLOAT64) valor_orcado,
         SAFE_CAST(vl_contratado AS FLOAT64) valor_contratado,
